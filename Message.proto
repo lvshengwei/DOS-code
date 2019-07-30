@@ -1,0 +1,36 @@
+syntax = "proto2";
+
+package Message.protobuf;
+
+message Msg{
+//发这条消息的主体角色。master 0, client 1, worker 2,
+required int32 role=1;
+//消息类型
+required int32 msgCategory=2;
+/* 
+worker向master注册 0
+client发送查询信息给master 1 
+master发送worker信息给client 2
+client发送任务给worker 3
+worker发送结果给client 4
+master告知client暂时没有worker工作5
+*/ 
+//ip与port可以是worker注册的信息，ip与port组合可以作为worker的id，也可以作为客户端的信息，通用。
+optional string ip=3;
+optional string port=4;
+//client给worker的操作数
+optional int32 int32op1=5;
+optional int32 int32op2=6;
+optional int64 int64op1=7;
+optional int64 int64op2=8;
+optional double dbop1=9;
+optional double dbop2=10;
+//client给worker的操作符: int32+,int32-,int32*,int32/,int64+,int64-,int64*,int64/,db+,db-,db*,db/.
+optional string operation=11;
+
+//worker给client返回的任务结果
+optional int32 int32result=12; 
+optional int64 int64result=13;
+optional double dbresult=14;
+
+}
